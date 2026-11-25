@@ -1,0 +1,52 @@
+{
+  "crs": "EPSG:32643",
+  "units": "metres",
+  "demand_points": "delhi_ev_master_wards_v1.csv: cx_utm, cy_utm",
+  "demand_weight": "demand_w (= ev_4w_demand)",
+  "demand_weight_check_later": "population",
+  "station_budget": 104,
+  "budget_sensitivity": [
+    50,
+    104,
+    157
+  ],
+  "coverage_radius_m": 2100,
+  "radius_sensitivity_m": [
+    1500,
+    2100,
+    3000
+  ],
+  "radius_sensitivity_status": "proposed, not yet decided",
+  "distance": {
+    "primary": "euclidean",
+    "sensitivity": "road (dist_road_ward_*_v1.csv); use 2 km candidates for road runs"
+  },
+  "candidates": {
+    "main": "candidates_v1.csv grid_km == 3",
+    "sensitivity": "grid_km == 2"
+  },
+  "grid_model": {
+    "cell_km": 3,
+    "sensitivity_cell_km": 2,
+    "ci_share_threshold": 0.01,
+    "threshold_sensitivity": [
+      0.01,
+      0.05,
+      0.1,
+      0.2,
+      0.3
+    ],
+    "station_location": "candidate point of the cell (in-area rule M2)"
+  },
+  "kmeans": {
+    "k": 104,
+    "silhouette_sweep": "diagnostic only",
+    "weights": "demand_w"
+  },
+  "scenarios": {
+    "A_greenfield": "place budget stations from scratch; existing chargers used only for evaluation",
+    "B_existing": "149 sites with scenario_b_fixed == True are fixed open; place up to budget new stations; grid drops cells with n_existing_4w > 0"
+  },
+  "decisions_log": "ASSUMPTIONS.md in Final Data (A1-A7, V1-V8, O1-O3, R1, D1-D3, M1-M2, F1)",
+  "budget_note": "104 = grid-model stations on the 2022 study area (3 km, 1% C/I); 157 = 2 km grid count (D1, decided 2026-11-21)"
+}

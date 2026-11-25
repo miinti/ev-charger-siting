@@ -1,0 +1,261 @@
+table,column,description,unit,source,decision_ref
+delhi_ev_gis_v1.gpkg : wards,(layer),Ward polygons with every master column (same as delhi_ev_master_wards_v1.csv),,,
+delhi_ev_gis_v1.gpkg : ward_demand_points,(layer),Model demand points (one per ward) with key attributes,,,
+delhi_ev_gis_v1.gpkg : study_area,(layer),250 MCD wards dissolved; NDMC/Cantonment hole kept,,,
+delhi_ev_gis_v1.gpkg : excluded_ndmc_cantonment,(layer),Area left out of the study (A3),,,
+delhi_ev_gis_v1.gpkg : rto_zones,(layer),Wards dissolved by nearest-office RTO zone,,,
+delhi_ev_gis_v1.gpkg : rto_offices,(layer),RTO office points used for the zones,,,
+delhi_ev_gis_v1.gpkg : existing_chargers,(layer),"All 1,404 existing chargers with 4W flag and scenario B flag",,,
+delhi_ev_gis_v1.gpkg : candidates_3km,(layer),"MCLP candidate sites / grid-model station points, 3 km grid (main)",,,
+delhi_ev_gis_v1.gpkg : candidates_2km,(layer),"Same for the 2 km grid (sensitivity, and road-distance runs)",,,
+delhi_ev_gis_v1.gpkg : grid_cells_3km,(layer),3 km grid cells touching the study area with grid-model attributes,,,
+delhi_ev_gis_v1.gpkg : grid_cells_2km,(layer),2 km grid cells (sensitivity),,,
+delhi_ev_gis_v1.gpkg : landuse_ci,(layer),Commercial/retail/industrial polygons used by the models,,,
+delhi_ev_gis_v1.gpkg : landuse_osm_all,(layer),"All OSM land-use polygons (53 classes), reference",,,
+delhi_ev_gis_v1.gpkg : roads_major,(layer),Tertiary-and-above roads within 2 km of the study area (display; full network in delhi_road_network_v1.gpkg),,,
+delhi_ev_master_wards_v1.csv,ward_no,2022 MCD ward number (unique key),,delhi_wards_2022.kml,A2
+delhi_ev_master_wards_v1.csv,ward_name,Ward name,,delhi_wards_2022.kml,A2
+delhi_ev_master_wards_v1.csv,ac_no,Assembly constituency number,,delhi_wards_2022.kml,
+delhi_ev_master_wards_v1.csv,ac_name,Assembly constituency name,,delhi_wards_2022.kml,
+delhi_ev_master_wards_v1.csv,population,"Ward population (Census 2011, via SEC 2022 delimitation)",persons,delhi_wards_2022.kml,A2
+delhi_ev_master_wards_v1.csv,area_km2,Area,km²,"computed, EPSG:32643",
+delhi_ev_master_wards_v1.csv,pop_density_per_km2,population / area_km2,persons/km²,computed,
+delhi_ev_master_wards_v1.csv,sc_pop,Scheduled Caste population (Census 2011),persons,delhi_wards_2022.kml,A6
+delhi_ev_master_wards_v1.csv,sc_share,sc_pop / population; the only ward-varying equity indicator,share 0-1,computed,"A6, A7"
+delhi_ev_master_wards_v1.csv,rto_zone,"RTO zone, by nearest RTO office to the ward point (DL11+DL13 merged)",,rto_offices_v1.csv,A4
+delhi_ev_master_wards_v1.csv,dist_to_rto_office_km,Distance from the ward point to its RTO office,km,computed,A4
+delhi_ev_master_wards_v1.csv,rto_cars_total,"Total VAHAN 'Cars (LMV)' EVs registered in the zone, 2020-2026",vehicles,VAHAN,"A4, V1-V3"
+delhi_ev_master_wards_v1.csv,ev_cars,Zone cars allocated to the ward by population share,vehicles,computed,A4
+delhi_ev_master_wards_v1.csv,ev_taxis,"DL52 e-taxis (14,016) spread in proportion to ev_cars",vehicles,VAHAN DL52,A5
+delhi_ev_master_wards_v1.csv,ev_4w_demand,ev_cars + ev_taxis,vehicles,computed,"A4, A5"
+delhi_ev_master_wards_v1.csv,ev_4w_per_1k_pop,"ev_4w_demand per 1,000 people","vehicles/1,000",computed,A4
+delhi_ev_master_wards_v1.csv,demand_w,MODEL DEMAND WEIGHT (= ev_4w_demand) for K-means and MCLP,vehicles,computed,D2
+delhi_ev_master_wards_v1.csv,demand_density_per_km2,demand_w / area_km2,vehicles/km²,computed,
+delhi_ev_master_wards_v1.csv,chargers_all,Existing chargers inside the ward (all types),count,delhi_ev_chargers_master,A1
+delhi_ev_master_wards_v1.csv,chargers_4w,Existing chargers inside the ward that are confirmed 4W sites,count,charger master + Kaggle,A1
+delhi_ev_master_wards_v1.csv,chargers_4w_unknown,Existing chargers inside the ward with unknown vehicle type (OSM),count,charger master,A1
+delhi_ev_master_wards_v1.csv,chargers_per_10k_pop,"chargers_all per 10,000 people","count/10,000",computed,
+delhi_ev_master_wards_v1.csv,has_4w_charger,ward contains at least one confirmed 4W site,bool,computed,A1
+delhi_ev_master_wards_v1.csv,dist_nearest_any_charger_m,"Straight-line distance, ward point -> nearest charger (any type)",m,computed,
+delhi_ev_master_wards_v1.csv,dist_nearest_4w_charger_m,"Straight-line distance, ward point -> nearest confirmed 4W site",m,computed,D3
+delhi_ev_master_wards_v1.csv,road_dist_nearest_4w_charger_m,"Road distance, ward point -> nearest confirmed 4W site",m,road network,R1
+delhi_ev_master_wards_v1.csv,n_chargers_any_within_2100m,Chargers (any type) within 2.1 km straight-line of the ward point,count,computed,
+delhi_ev_master_wards_v1.csv,n_chargers_4w_within_2100m,Confirmed 4W sites within 2.1 km straight-line of the ward point,count,computed,D3
+delhi_ev_master_wards_v1.csv,covered_4w_euclid_2100m,Baseline: ward point within 2.1 km straight-line of a confirmed 4W site,bool,computed,D3
+delhi_ev_master_wards_v1.csv,covered_4w_road_2100m,Baseline: ward point within 2.1 km by road of a confirmed 4W site,bool,computed,"D3, R1"
+delhi_ev_master_wards_v1.csv,ci_area_km2,MODEL INPUT land use: commercial+retail+industrial area (unioned),km²,"delhi_landuse_ci.gpkg (OSM, Oct 2026)",C6
+delhi_ev_master_wards_v1.csv,commercial_area_km2,Commercial + retail area,km²,delhi_landuse_ci.gpkg,
+delhi_ev_master_wards_v1.csv,industrial_area_km2,Industrial area,km²,delhi_landuse_ci.gpkg,
+delhi_ev_master_wards_v1.csv,ci_share,MODEL INPUT: ci_area / ward area,share 0-1,computed,
+delhi_ev_master_wards_v1.csv,commercial_share,commercial_area / ward area,share 0-1,computed,
+delhi_ev_master_wards_v1.csv,industrial_share,industrial_area / ward area,share 0-1,computed,
+delhi_ev_master_wards_v1.csv,osm_lu_share_agricultural,Reference: share farmland/farmyard/meadow/orchard/plantation etc.,share 0-1,pbf,F1
+delhi_ev_master_wards_v1.csv,osm_lu_share_commercial,"Reference: share tagged commercial (incl. event venue, corporate office)",share 0-1,pbf,F1
+delhi_ev_master_wards_v1.csv,osm_lu_share_construction_brownfield,Reference: share construction/brownfield/landfill,share 0-1,pbf,F1
+delhi_ev_master_wards_v1.csv,osm_lu_share_green,Reference: share forest/grass/recreation/cemetery/stadium etc.,share 0-1,pbf,F1
+delhi_ev_master_wards_v1.csv,osm_lu_share_industrial,Reference: share tagged industrial,share 0-1,pbf,F1
+delhi_ev_master_wards_v1.csv,osm_lu_share_institutional,Reference: share education/hospital/religious/civic/police etc.,share 0-1,pbf,F1
+delhi_ev_master_wards_v1.csv,osm_lu_share_military,Reference: share military,share 0-1,pbf,F1
+delhi_ev_master_wards_v1.csv,osm_lu_share_other,Reference: share with unclear tags (area/locality/site),share 0-1,pbf,F1
+delhi_ev_master_wards_v1.csv,osm_lu_share_residential,Reference: share of ward area tagged residential (full OSM land use),share 0-1,delhi_osm_chargers.pbf,F1
+delhi_ev_master_wards_v1.csv,osm_lu_share_retail,Reference: share tagged retail,share 0-1,pbf,F1
+delhi_ev_master_wards_v1.csv,osm_lu_share_transport,Reference: share railway/garages/depot/parking,share 0-1,pbf,F1
+delhi_ev_master_wards_v1.csv,osm_lu_share_water,Reference: share basin/reservoir/floodplains,share 0-1,pbf,F1
+delhi_ev_master_wards_v1.csv,osm_lu_share_mapped,Reference: share of ward covered by ANY OSM land-use polygon (the rest is untagged),share 0-1,pbf,F1
+delhi_ev_master_wards_v1.csv,osm_lu_dominant,Reference: land-use group with the largest share ('unmapped' if none),,pbf,F1
+delhi_ev_master_wards_v1.csv,income_pci_inr,Per-capita income proxy: flat Delhi value in every ward,₹/person,income proxy xlsx,A7
+delhi_ev_master_wards_v1.csv,income_total_inr,population × income_pci_inr (no equity signal),₹,computed,A7
+delhi_ev_master_wards_v1.csv,income_pci_is_flat,True = income does not vary by ward; use sc_share for equity,bool,computed,A7
+delhi_ev_master_wards_v1.csv,cx_utm,MODEL DEMAND POINT x (point guaranteed inside the ward),"m, EPSG:32643",computed,M1
+delhi_ev_master_wards_v1.csv,cy_utm,MODEL DEMAND POINT y,"m, EPSG:32643",computed,M1
+delhi_ev_master_wards_v1.csv,lon,Demand point longitude,"deg, WGS84",computed,
+delhi_ev_master_wards_v1.csv,lat,Demand point latitude,"deg, WGS84",computed,
+delhi_ev_master_wards_v1.csv,road_snap_m,Distance from the point to the nearest road-network node (added to road distances),m,road network,R1
+delhi_ev_gis_v1.gpkg : wards,ward_no,2022 MCD ward number (unique key),,delhi_wards_2022.kml,A2
+delhi_ev_gis_v1.gpkg : wards,ward_name,Ward name,,delhi_wards_2022.kml,A2
+delhi_ev_gis_v1.gpkg : wards,ac_no,Assembly constituency number,,delhi_wards_2022.kml,
+delhi_ev_gis_v1.gpkg : wards,ac_name,Assembly constituency name,,delhi_wards_2022.kml,
+delhi_ev_gis_v1.gpkg : wards,population,"Ward population (Census 2011, via SEC 2022 delimitation)",persons,delhi_wards_2022.kml,A2
+delhi_ev_gis_v1.gpkg : wards,area_km2,Area,km²,"computed, EPSG:32643",
+delhi_ev_gis_v1.gpkg : wards,pop_density_per_km2,population / area_km2,persons/km²,computed,
+delhi_ev_gis_v1.gpkg : wards,sc_pop,Scheduled Caste population (Census 2011),persons,delhi_wards_2022.kml,A6
+delhi_ev_gis_v1.gpkg : wards,sc_share,sc_pop / population; the only ward-varying equity indicator,share 0-1,computed,"A6, A7"
+delhi_ev_gis_v1.gpkg : wards,rto_zone,"RTO zone, by nearest RTO office to the ward point (DL11+DL13 merged)",,rto_offices_v1.csv,A4
+delhi_ev_gis_v1.gpkg : wards,dist_to_rto_office_km,Distance from the ward point to its RTO office,km,computed,A4
+delhi_ev_gis_v1.gpkg : wards,rto_cars_total,"Total VAHAN 'Cars (LMV)' EVs registered in the zone, 2020-2026",vehicles,VAHAN,"A4, V1-V3"
+delhi_ev_gis_v1.gpkg : wards,ev_cars,Zone cars allocated to the ward by population share,vehicles,computed,A4
+delhi_ev_gis_v1.gpkg : wards,ev_taxis,"DL52 e-taxis (14,016) spread in proportion to ev_cars",vehicles,VAHAN DL52,A5
+delhi_ev_gis_v1.gpkg : wards,ev_4w_demand,ev_cars + ev_taxis,vehicles,computed,"A4, A5"
+delhi_ev_gis_v1.gpkg : wards,ev_4w_per_1k_pop,"ev_4w_demand per 1,000 people","vehicles/1,000",computed,A4
+delhi_ev_gis_v1.gpkg : wards,demand_w,MODEL DEMAND WEIGHT (= ev_4w_demand) for K-means and MCLP,vehicles,computed,D2
+delhi_ev_gis_v1.gpkg : wards,demand_density_per_km2,demand_w / area_km2,vehicles/km²,computed,
+delhi_ev_gis_v1.gpkg : wards,chargers_all,Existing chargers inside the ward (all types),count,delhi_ev_chargers_master,A1
+delhi_ev_gis_v1.gpkg : wards,chargers_4w,Existing chargers inside the ward that are confirmed 4W sites,count,charger master + Kaggle,A1
+delhi_ev_gis_v1.gpkg : wards,chargers_4w_unknown,Existing chargers inside the ward with unknown vehicle type (OSM),count,charger master,A1
+delhi_ev_gis_v1.gpkg : wards,chargers_per_10k_pop,"chargers_all per 10,000 people","count/10,000",computed,
+delhi_ev_gis_v1.gpkg : wards,has_4w_charger,ward contains at least one confirmed 4W site,bool,computed,A1
+delhi_ev_gis_v1.gpkg : wards,dist_nearest_any_charger_m,"Straight-line distance, ward point -> nearest charger (any type)",m,computed,
+delhi_ev_gis_v1.gpkg : wards,dist_nearest_4w_charger_m,"Straight-line distance, ward point -> nearest confirmed 4W site",m,computed,D3
+delhi_ev_gis_v1.gpkg : wards,road_dist_nearest_4w_charger_m,"Road distance, ward point -> nearest confirmed 4W site",m,road network,R1
+delhi_ev_gis_v1.gpkg : wards,n_chargers_any_within_2100m,Chargers (any type) within 2.1 km straight-line of the ward point,count,computed,
+delhi_ev_gis_v1.gpkg : wards,n_chargers_4w_within_2100m,Confirmed 4W sites within 2.1 km straight-line of the ward point,count,computed,D3
+delhi_ev_gis_v1.gpkg : wards,covered_4w_euclid_2100m,Baseline: ward point within 2.1 km straight-line of a confirmed 4W site,bool,computed,D3
+delhi_ev_gis_v1.gpkg : wards,covered_4w_road_2100m,Baseline: ward point within 2.1 km by road of a confirmed 4W site,bool,computed,"D3, R1"
+delhi_ev_gis_v1.gpkg : wards,ci_area_km2,MODEL INPUT land use: commercial+retail+industrial area (unioned),km²,"delhi_landuse_ci.gpkg (OSM, Oct 2026)",C6
+delhi_ev_gis_v1.gpkg : wards,commercial_area_km2,Commercial + retail area,km²,delhi_landuse_ci.gpkg,
+delhi_ev_gis_v1.gpkg : wards,industrial_area_km2,Industrial area,km²,delhi_landuse_ci.gpkg,
+delhi_ev_gis_v1.gpkg : wards,ci_share,MODEL INPUT: ci_area / ward area,share 0-1,computed,
+delhi_ev_gis_v1.gpkg : wards,commercial_share,commercial_area / ward area,share 0-1,computed,
+delhi_ev_gis_v1.gpkg : wards,industrial_share,industrial_area / ward area,share 0-1,computed,
+delhi_ev_gis_v1.gpkg : wards,osm_lu_share_agricultural,Reference: share farmland/farmyard/meadow/orchard/plantation etc.,share 0-1,pbf,F1
+delhi_ev_gis_v1.gpkg : wards,osm_lu_share_commercial,"Reference: share tagged commercial (incl. event venue, corporate office)",share 0-1,pbf,F1
+delhi_ev_gis_v1.gpkg : wards,osm_lu_share_construction_brownfield,Reference: share construction/brownfield/landfill,share 0-1,pbf,F1
+delhi_ev_gis_v1.gpkg : wards,osm_lu_share_green,Reference: share forest/grass/recreation/cemetery/stadium etc.,share 0-1,pbf,F1
+delhi_ev_gis_v1.gpkg : wards,osm_lu_share_industrial,Reference: share tagged industrial,share 0-1,pbf,F1
+delhi_ev_gis_v1.gpkg : wards,osm_lu_share_institutional,Reference: share education/hospital/religious/civic/police etc.,share 0-1,pbf,F1
+delhi_ev_gis_v1.gpkg : wards,osm_lu_share_military,Reference: share military,share 0-1,pbf,F1
+delhi_ev_gis_v1.gpkg : wards,osm_lu_share_other,Reference: share with unclear tags (area/locality/site),share 0-1,pbf,F1
+delhi_ev_gis_v1.gpkg : wards,osm_lu_share_residential,Reference: share of ward area tagged residential (full OSM land use),share 0-1,delhi_osm_chargers.pbf,F1
+delhi_ev_gis_v1.gpkg : wards,osm_lu_share_retail,Reference: share tagged retail,share 0-1,pbf,F1
+delhi_ev_gis_v1.gpkg : wards,osm_lu_share_transport,Reference: share railway/garages/depot/parking,share 0-1,pbf,F1
+delhi_ev_gis_v1.gpkg : wards,osm_lu_share_water,Reference: share basin/reservoir/floodplains,share 0-1,pbf,F1
+delhi_ev_gis_v1.gpkg : wards,osm_lu_share_mapped,Reference: share of ward covered by ANY OSM land-use polygon (the rest is untagged),share 0-1,pbf,F1
+delhi_ev_gis_v1.gpkg : wards,osm_lu_dominant,Reference: land-use group with the largest share ('unmapped' if none),,pbf,F1
+delhi_ev_gis_v1.gpkg : wards,income_pci_inr,Per-capita income proxy: flat Delhi value in every ward,₹/person,income proxy xlsx,A7
+delhi_ev_gis_v1.gpkg : wards,income_total_inr,population × income_pci_inr (no equity signal),₹,computed,A7
+delhi_ev_gis_v1.gpkg : wards,income_pci_is_flat,True = income does not vary by ward; use sc_share for equity,bool,computed,A7
+delhi_ev_gis_v1.gpkg : wards,cx_utm,MODEL DEMAND POINT x (point guaranteed inside the ward),"m, EPSG:32643",computed,M1
+delhi_ev_gis_v1.gpkg : wards,cy_utm,MODEL DEMAND POINT y,"m, EPSG:32643",computed,M1
+delhi_ev_gis_v1.gpkg : wards,lon,Demand point longitude,"deg, WGS84",computed,
+delhi_ev_gis_v1.gpkg : wards,lat,Demand point latitude,"deg, WGS84",computed,
+delhi_ev_gis_v1.gpkg : wards,road_snap_m,Distance from the point to the nearest road-network node (added to road distances),m,road network,R1
+delhi_ev_gis_v1.gpkg : ward_demand_points,ward_no,2022 MCD ward number (unique key),,delhi_wards_2022.kml,A2
+delhi_ev_gis_v1.gpkg : ward_demand_points,ward_name,Ward name,,delhi_wards_2022.kml,A2
+delhi_ev_gis_v1.gpkg : ward_demand_points,rto_zone,"RTO zone, by nearest RTO office to the ward point (DL11+DL13 merged)",,rto_offices_v1.csv,A4
+delhi_ev_gis_v1.gpkg : ward_demand_points,population,"Ward population (Census 2011, via SEC 2022 delimitation)",persons,delhi_wards_2022.kml,A2
+delhi_ev_gis_v1.gpkg : ward_demand_points,demand_w,MODEL DEMAND WEIGHT (= ev_4w_demand) for K-means and MCLP,vehicles,computed,D2
+delhi_ev_gis_v1.gpkg : ward_demand_points,sc_share,sc_pop / population; the only ward-varying equity indicator,share 0-1,computed,"A6, A7"
+delhi_ev_gis_v1.gpkg : ward_demand_points,chargers_4w,Existing chargers inside the ward that are confirmed 4W sites,count,charger master + Kaggle,A1
+delhi_ev_gis_v1.gpkg : ward_demand_points,covered_4w_euclid_2100m,Baseline: ward point within 2.1 km straight-line of a confirmed 4W site,bool,computed,D3
+delhi_ev_gis_v1.gpkg : ward_demand_points,covered_4w_road_2100m,Baseline: ward point within 2.1 km by road of a confirmed 4W site,bool,computed,"D3, R1"
+delhi_ev_gis_v1.gpkg : study_area,name,Name,,,
+delhi_ev_gis_v1.gpkg : study_area,area_km2,Area,km²,"computed, EPSG:32643",
+delhi_ev_gis_v1.gpkg : excluded_ndmc_cantonment,name,Name,,,
+delhi_ev_gis_v1.gpkg : excluded_ndmc_cantonment,area_km2,Area,km²,"computed, EPSG:32643",
+delhi_ev_gis_v1.gpkg : rto_zones,rto_zone,"RTO zone, by nearest RTO office to the ward point (DL11+DL13 merged)",,rto_offices_v1.csv,A4
+delhi_ev_gis_v1.gpkg : rto_zones,n_wards,Wards in the zone,count,computed,
+delhi_ev_gis_v1.gpkg : rto_zones,population,"Ward population (Census 2011, via SEC 2022 delimitation)",persons,delhi_wards_2022.kml,A2
+delhi_ev_gis_v1.gpkg : rto_zones,ev_cars,Zone cars allocated to the ward by population share,vehicles,computed,A4
+delhi_ev_gis_v1.gpkg : rto_zones,ev_taxis,"DL52 e-taxis (14,016) spread in proportion to ev_cars",vehicles,VAHAN DL52,A5
+delhi_ev_gis_v1.gpkg : rto_zones,demand_w,MODEL DEMAND WEIGHT (= ev_4w_demand) for K-means and MCLP,vehicles,computed,D2
+delhi_ev_gis_v1.gpkg : rto_zones,rto_cars_total,"Total VAHAN 'Cars (LMV)' EVs registered in the zone, 2020-2026",vehicles,VAHAN,"A4, V1-V3"
+delhi_ev_gis_v1.gpkg : rto_zones,cars_per_1k_pop,"Zone cars per 1,000 people (shows the zone artefact)","vehicles/1,000",computed,A4
+delhi_ev_gis_v1.gpkg : rto_offices,rto_zone,"RTO zone, by nearest RTO office to the ward point (DL11+DL13 merged)",,rto_offices_v1.csv,A4
+delhi_ev_gis_v1.gpkg : rto_offices,rto_codes,VAHAN RTO code(s) in the zone,,VAHAN,A4
+delhi_ev_gis_v1.gpkg : rto_offices,rto_name,RTO name,,VAHAN,
+delhi_ev_gis_v1.gpkg : rto_offices,lat,Demand point latitude,"deg, WGS84",computed,
+delhi_ev_gis_v1.gpkg : rto_offices,lon,Demand point longitude,"deg, WGS84",computed,
+delhi_ev_gis_v1.gpkg : rto_offices,loc_source,Where the office location comes from,,OSM / manual,A4
+delhi_ev_gis_v1.gpkg : rto_offices,confidence,Confidence in the office location,,judgement,A4
+delhi_ev_gis_v1.gpkg : existing_chargers,station_name,Charger name as in source,,charger master,
+delhi_ev_gis_v1.gpkg : existing_chargers,source,SwitchDelhi_Gov or OpenStreetMap,,charger master,
+delhi_ev_gis_v1.gpkg : existing_chargers,is_4w,"1 = confirmed 4W site, 0 = 2W/3W only, NULL = unknown (OSM)",,Kaggle match ≤30 m,A1
+delhi_ev_gis_v1.gpkg : existing_chargers,kaggle_match,Charger matched a Kaggle (SwitchDelhi source) row within 30 m,bool,computed,A1
+delhi_ev_gis_v1.gpkg : existing_chargers,ward_no,2022 MCD ward number (unique key),,delhi_wards_2022.kml,A2
+delhi_ev_gis_v1.gpkg : existing_chargers,charger_id,Charger id (0-1403); road matrix columns are c<charger_id>,,computed,
+delhi_ev_gis_v1.gpkg : existing_chargers,in_study_area,Charger lies inside the study area,bool,computed,A3
+delhi_ev_gis_v1.gpkg : existing_chargers,scenario_b_fixed,Scenario B: treated as an already-open station (the 149 confirmed 4W sites),bool,computed,D3
+delhi_ev_gis_v1.gpkg : candidates_3km,cand_id,Candidate site id: g<grid_km>_<cell_id>; column names in the road matrices,,computed,M1
+delhi_ev_gis_v1.gpkg : candidates_3km,grid_km,"Grid size of the cell (3 = main, 2 = sensitivity)",km,QGIS grids,D1
+delhi_ev_gis_v1.gpkg : candidates_3km,cell_id,Grid cell id from the QGIS grid file,,grid_3km/2km.gpkg,
+delhi_ev_gis_v1.gpkg : candidates_3km,area_in_study_km2,Cell or polygon area inside the study area,km²,computed,
+delhi_ev_gis_v1.gpkg : candidates_3km,share_ci,Grid-model input: C/I share of the cell's in-area part,share 0-1,delhi_landuse_ci.gpkg,
+delhi_ev_gis_v1.gpkg : candidates_3km,share_commercial,Commercial + retail share of the cell's in-area part,share 0-1,computed,
+delhi_ev_gis_v1.gpkg : candidates_3km,share_industrial,Industrial share of the cell's in-area part,share 0-1,computed,
+delhi_ev_gis_v1.gpkg : candidates_3km,grid_candidate_1pct,Grid-model baseline: cell qualifies (share_ci >= 1%) -> gets a station,bool,computed,D1
+delhi_ev_gis_v1.gpkg : candidates_3km,n_existing_all,Existing chargers in the cell (any type),count,computed,
+delhi_ev_gis_v1.gpkg : candidates_3km,n_existing_4w,Confirmed 4W sites in the cell (scenario B: grid drops these cells),count,computed,D3
+delhi_ev_gis_v1.gpkg : candidates_3km,moved_in_area,Site moved from the cell centroid to the centre of its in-area part,bool,computed,M2
+delhi_ev_gis_v1.gpkg : candidates_3km,move_m,How far the site moved,m,computed,M2
+delhi_ev_gis_v1.gpkg : candidates_3km,orig_x,Original cell centroid x,"m, EPSG:32643",computed,M2
+delhi_ev_gis_v1.gpkg : candidates_3km,orig_y,Original cell centroid y,"m, EPSG:32643",computed,M2
+delhi_ev_gis_v1.gpkg : candidates_3km,road_snap_m,Distance from the point to the nearest road-network node (added to road distances),m,road network,R1
+delhi_ev_gis_v1.gpkg : candidates_2km,cand_id,Candidate site id: g<grid_km>_<cell_id>; column names in the road matrices,,computed,M1
+delhi_ev_gis_v1.gpkg : candidates_2km,grid_km,"Grid size of the cell (3 = main, 2 = sensitivity)",km,QGIS grids,D1
+delhi_ev_gis_v1.gpkg : candidates_2km,cell_id,Grid cell id from the QGIS grid file,,grid_3km/2km.gpkg,
+delhi_ev_gis_v1.gpkg : candidates_2km,area_in_study_km2,Cell or polygon area inside the study area,km²,computed,
+delhi_ev_gis_v1.gpkg : candidates_2km,share_ci,Grid-model input: C/I share of the cell's in-area part,share 0-1,delhi_landuse_ci.gpkg,
+delhi_ev_gis_v1.gpkg : candidates_2km,share_commercial,Commercial + retail share of the cell's in-area part,share 0-1,computed,
+delhi_ev_gis_v1.gpkg : candidates_2km,share_industrial,Industrial share of the cell's in-area part,share 0-1,computed,
+delhi_ev_gis_v1.gpkg : candidates_2km,grid_candidate_1pct,Grid-model baseline: cell qualifies (share_ci >= 1%) -> gets a station,bool,computed,D1
+delhi_ev_gis_v1.gpkg : candidates_2km,n_existing_all,Existing chargers in the cell (any type),count,computed,
+delhi_ev_gis_v1.gpkg : candidates_2km,n_existing_4w,Confirmed 4W sites in the cell (scenario B: grid drops these cells),count,computed,D3
+delhi_ev_gis_v1.gpkg : candidates_2km,moved_in_area,Site moved from the cell centroid to the centre of its in-area part,bool,computed,M2
+delhi_ev_gis_v1.gpkg : candidates_2km,move_m,How far the site moved,m,computed,M2
+delhi_ev_gis_v1.gpkg : candidates_2km,orig_x,Original cell centroid x,"m, EPSG:32643",computed,M2
+delhi_ev_gis_v1.gpkg : candidates_2km,orig_y,Original cell centroid y,"m, EPSG:32643",computed,M2
+delhi_ev_gis_v1.gpkg : candidates_2km,road_snap_m,Distance from the point to the nearest road-network node (added to road distances),m,road network,R1
+delhi_ev_gis_v1.gpkg : grid_cells_3km,cell_id,Grid cell id from the QGIS grid file,,grid_3km/2km.gpkg,
+delhi_ev_gis_v1.gpkg : grid_cells_3km,grid_km,"Grid size of the cell (3 = main, 2 = sensitivity)",km,QGIS grids,D1
+delhi_ev_gis_v1.gpkg : grid_cells_3km,area_in_study_km2,Cell or polygon area inside the study area,km²,computed,
+delhi_ev_gis_v1.gpkg : grid_cells_3km,share_ci,Grid-model input: C/I share of the cell's in-area part,share 0-1,delhi_landuse_ci.gpkg,
+delhi_ev_gis_v1.gpkg : grid_cells_3km,share_commercial,Commercial + retail share of the cell's in-area part,share 0-1,computed,
+delhi_ev_gis_v1.gpkg : grid_cells_3km,share_industrial,Industrial share of the cell's in-area part,share 0-1,computed,
+delhi_ev_gis_v1.gpkg : grid_cells_3km,n_existing_all,Existing chargers in the cell (any type),count,computed,
+delhi_ev_gis_v1.gpkg : grid_cells_3km,n_existing_4w,Confirmed 4W sites in the cell (scenario B: grid drops these cells),count,computed,D3
+delhi_ev_gis_v1.gpkg : grid_cells_3km,grid_candidate_1pct,Grid-model baseline: cell qualifies (share_ci >= 1%) -> gets a station,bool,computed,D1
+delhi_ev_gis_v1.gpkg : grid_cells_3km,cand_id,Candidate site id: g<grid_km>_<cell_id>; column names in the road matrices,,computed,M1
+delhi_ev_gis_v1.gpkg : grid_cells_2km,cell_id,Grid cell id from the QGIS grid file,,grid_3km/2km.gpkg,
+delhi_ev_gis_v1.gpkg : grid_cells_2km,grid_km,"Grid size of the cell (3 = main, 2 = sensitivity)",km,QGIS grids,D1
+delhi_ev_gis_v1.gpkg : grid_cells_2km,area_in_study_km2,Cell or polygon area inside the study area,km²,computed,
+delhi_ev_gis_v1.gpkg : grid_cells_2km,share_ci,Grid-model input: C/I share of the cell's in-area part,share 0-1,delhi_landuse_ci.gpkg,
+delhi_ev_gis_v1.gpkg : grid_cells_2km,share_commercial,Commercial + retail share of the cell's in-area part,share 0-1,computed,
+delhi_ev_gis_v1.gpkg : grid_cells_2km,share_industrial,Industrial share of the cell's in-area part,share 0-1,computed,
+delhi_ev_gis_v1.gpkg : grid_cells_2km,n_existing_all,Existing chargers in the cell (any type),count,computed,
+delhi_ev_gis_v1.gpkg : grid_cells_2km,n_existing_4w,Confirmed 4W sites in the cell (scenario B: grid drops these cells),count,computed,D3
+delhi_ev_gis_v1.gpkg : grid_cells_2km,grid_candidate_1pct,Grid-model baseline: cell qualifies (share_ci >= 1%) -> gets a station,bool,computed,D1
+delhi_ev_gis_v1.gpkg : grid_cells_2km,cand_id,Candidate site id: g<grid_km>_<cell_id>; column names in the road matrices,,computed,M1
+delhi_ev_gis_v1.gpkg : landuse_ci,landuse,OSM landuse tag,,OSM,
+delhi_ev_gis_v1.gpkg : landuse_ci,lu_class,Model class: commercial (incl. retail) or industrial,,computed,
+delhi_ev_gis_v1.gpkg : landuse_ci,area_km2,Area,km²,"computed, EPSG:32643",
+delhi_ev_gis_v1.gpkg : landuse_osm_all,osm_id,OSM element id,,OSM,
+delhi_ev_gis_v1.gpkg : landuse_osm_all,osm_type,OSM element type (way/relation),,OSM,
+delhi_ev_gis_v1.gpkg : landuse_osm_all,landuse,OSM landuse tag,,OSM,
+delhi_ev_gis_v1.gpkg : landuse_osm_all,lu_group,Grouped land-use class (see compile_final_v1.py LU_GROUPS),,computed,F1
+delhi_ev_gis_v1.gpkg : landuse_osm_all,area_km2,Area,km²,"computed, EPSG:32643",
+delhi_ev_gis_v1.gpkg : landuse_osm_all,area_in_study_km2,Cell or polygon area inside the study area,km²,computed,
+delhi_ev_gis_v1.gpkg : landuse_osm_all,in_model_ci_input,"Class is commercial/retail/industrial, the classes the models use",bool,computed,F1
+delhi_ev_gis_v1.gpkg : roads_major,highway,OSM road class,,OSM,R1
+delhi_ev_gis_v1.gpkg : roads_major,name,Name,,,
+delhi_ev_gis_v1.gpkg : roads_major,oneway,OSM oneway tag,,OSM,R1
+delhi_ev_gis_v1.gpkg : roads_major,length_m,Road segment length,m,computed,R1
+model_inputs/candidates_v1.csv,cand_id,Candidate site id: g<grid_km>_<cell_id>; column names in the road matrices,,computed,M1
+model_inputs/candidates_v1.csv,grid_km,"Grid size of the cell (3 = main, 2 = sensitivity)",km,QGIS grids,D1
+model_inputs/candidates_v1.csv,cell_id,Grid cell id from the QGIS grid file,,grid_3km/2km.gpkg,
+model_inputs/candidates_v1.csv,area_in_study_km2,Cell or polygon area inside the study area,km²,computed,
+model_inputs/candidates_v1.csv,share_ci,Grid-model input: C/I share of the cell's in-area part,share 0-1,delhi_landuse_ci.gpkg,
+model_inputs/candidates_v1.csv,share_commercial,Commercial + retail share of the cell's in-area part,share 0-1,computed,
+model_inputs/candidates_v1.csv,share_industrial,Industrial share of the cell's in-area part,share 0-1,computed,
+model_inputs/candidates_v1.csv,grid_candidate_1pct,Grid-model baseline: cell qualifies (share_ci >= 1%) -> gets a station,bool,computed,D1
+model_inputs/candidates_v1.csv,n_existing_all,Existing chargers in the cell (any type),count,computed,
+model_inputs/candidates_v1.csv,n_existing_4w,Confirmed 4W sites in the cell (scenario B: grid drops these cells),count,computed,D3
+model_inputs/candidates_v1.csv,moved_in_area,Site moved from the cell centroid to the centre of its in-area part,bool,computed,M2
+model_inputs/candidates_v1.csv,move_m,How far the site moved,m,computed,M2
+model_inputs/candidates_v1.csv,orig_x,Original cell centroid x,"m, EPSG:32643",computed,M2
+model_inputs/candidates_v1.csv,orig_y,Original cell centroid y,"m, EPSG:32643",computed,M2
+model_inputs/candidates_v1.csv,road_snap_m,Distance from the point to the nearest road-network node (added to road distances),m,road network,R1
+model_inputs/candidates_v1.csv,x,Point x,"m, EPSG:32643",computed,
+model_inputs/candidates_v1.csv,y,Point y,"m, EPSG:32643",computed,
+model_inputs/existing_chargers_v1.csv,station_name,Charger name as in source,,charger master,
+model_inputs/existing_chargers_v1.csv,source,SwitchDelhi_Gov or OpenStreetMap,,charger master,
+model_inputs/existing_chargers_v1.csv,is_4w,"1 = confirmed 4W site, 0 = 2W/3W only, NULL = unknown (OSM)",,Kaggle match ≤30 m,A1
+model_inputs/existing_chargers_v1.csv,kaggle_match,Charger matched a Kaggle (SwitchDelhi source) row within 30 m,bool,computed,A1
+model_inputs/existing_chargers_v1.csv,ward_no,2022 MCD ward number (unique key),,delhi_wards_2022.kml,A2
+model_inputs/existing_chargers_v1.csv,charger_id,Charger id (0-1403); road matrix columns are c<charger_id>,,computed,
+model_inputs/existing_chargers_v1.csv,in_study_area,Charger lies inside the study area,bool,computed,A3
+model_inputs/existing_chargers_v1.csv,scenario_b_fixed,Scenario B: treated as an already-open station (the 149 confirmed 4W sites),bool,computed,D3
+model_inputs/existing_chargers_v1.csv,x,Point x,"m, EPSG:32643",computed,
+model_inputs/existing_chargers_v1.csv,y,Point y,"m, EPSG:32643",computed,
+model_inputs/dist_road_ward_cand3_v1.csv,(matrix),"Road distance ward (rows, ward_no) -> 3 km candidate (cand_id) (columns); NaN = beyond 25 km",m,road network,"R1, M1, M2"
+model_inputs/dist_road_ward_cand2_v1.csv,(matrix),"Road distance ward (rows, ward_no) -> 2 km candidate (cand_id) (columns); NaN = beyond 25 km",m,road network,"R1, M1, M2"
+model_inputs/dist_road_ward_exist4w_v1.csv,(matrix),"Road distance ward (rows, ward_no) -> confirmed 4W site (c<charger_id>) (columns); NaN = beyond 25 km",m,road network,"R1, M1, M2"

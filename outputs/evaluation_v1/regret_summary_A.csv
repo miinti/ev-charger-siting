@@ -1,0 +1,4 @@
+layout,worst_regret,mean_regret,yardsticks_won,worst_on
+"Grid (3 km, 1%)",0.7965607919025133,0.199406120695101,0,max_dist_any_cell_m
+K-means (k=104),0.0704412092975692,0.004769382774700561,15,gini_access_dist_pop
+"MCLP (p=104, R=2.1 km)",0.5748621279404825,0.07465398477009201,3,max_dist_any_cell_m

@@ -1,0 +1,56 @@
+{
+ "crs": "EPSG:32643",
+ "gis": "Final Data/delhi_ev_gis_v1.gpkg",
+ "master": "Final Data/delhi_ev_master_wards_v1.csv",
+ "candidates": "Final Data/model_inputs/candidates_v1.csv",
+ "chargers": "Final Data/model_inputs/existing_chargers_v1.csv",
+ "road": "Final Data/delhi_road_network_v1.gpkg",
+ "osm": "delhi.osm.pbf",
+ "demand": "data/delhi_demand_weights.gpkg",
+ "demand_500": "data/delhi_demand_weights_500m.gpkg",
+ "rebuild_demand": true,
+ "run_road": true,
+ "weight": "ev",
+ "P": 104,
+ "R": 2100,
+ "R_tie": 1000,
+ "grid_km": [
+  3,
+  2,
+  1
+ ],
+ "thresholds": [
+  0.01,
+  0.05,
+  0.1,
+  0.2,
+  0.3
+ ],
+ "radii": [
+  1500,
+  2100,
+  3000
+ ],
+ "budgets": [
+  104,
+  157,
+  178,
+  206,
+  404
+ ],
+ "seed": 42,
+ "n_init": 20,
+ "n_seeds": 10,
+ "mc_runs": 50,
+ "mc_sigma": 0.3,
+ "mc_lam": [
+  0.3,
+  0.8
+ ],
+ "mc_conc": 50.0,
+ "robust": 0.8,
+ "tl_fast": 300,
+ "tl_slow": 600,
+ "tl_budget": 180,
+ "out": "outputs/final"
+}

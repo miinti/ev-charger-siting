@@ -1,0 +1,4 @@
+reading,stations,lower_bound,status,gap,unreachable_cells
+"2.1 km straight-line, 206 grid points",178,178.0,0,0.0,1
+"2.1 km straight-line, anywhere (1 km cells)",133,126.0,1,0.05263157894736903,0
+"3 km by road, anywhere (1 km cells)",224,224.0,0,0.0,2

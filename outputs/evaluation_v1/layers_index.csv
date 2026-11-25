@@ -1,0 +1,28 @@
+layer,description,stations
+A_grid_3km,A_grid_3km,104
+A_kmeans_104,A_kmeans_104,104
+A_mclp_104,A_mclp_104,104
+B_grid_new,B_grid_new,59
+B_kmeans_new,B_kmeans_new,104
+B_mclp_new,B_mclp_new,104
+A_kmeans_cap1.5,A_kmeans_cap1.5,104
+A_mclp_cap1.5,A_mclp_cap1.5,104
+A_grid_2km,A_grid_2km,157
+A_grid_1km,A_grid_1km,404
+A_mclp1km_104,A_mclp1km_104,104
+A_kmeans_157,A_kmeans_157,157
+A_mclp1km_157,A_mclp1km_157,157
+A_kmeans_178,A_kmeans_178,178
+A_mclp1km_178,A_mclp1km_178,178
+A_kmeans_206,A_kmeans_206,206
+A_mclp1km_206,A_mclp1km_206,206
+A_kmeans_404,A_kmeans_404,404
+A_mclp1km_404,A_mclp1km_404,404
+ext_MCLP_baseline__3_km_candidates_,MCLP baseline (3 km candidates),104
+ext_K_means_baseline,K-means baseline,104
+ext_MCLP_on_real_sites__OSM_parking_fuel_,MCLP on real sites (OSM parking/fuel),104
+ext_K_medoids___p_median_on_real_sites,K-medoids / p-median on real sites,104
+ext_MCLP_road__3_km_by_road__3_km_candidates_,"MCLP road (3 km by road, 3 km candidates)",104
+ext_p_median_Euclidean__1_km_cell_candidates_,p-median Euclidean (1 km cell candidates),104
+ext_p_median_road_distance__1_km_cell_candidates_,p-median road distance (1 km cell candidates),104
+ext_MCLP_gradual_coverage__1_km_full____3_km_zero_,MCLP gradual coverage (1 km full -> 3 km zero),104

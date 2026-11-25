@@ -1,0 +1,5 @@
+,median persistence,robust sites (>= 80%)
+"MC (weights redrawn), within 1 km",0.5700000000000001,17
+"MC (weights redrawn), within 2 km",0.98,93
+"control (same weights), within 1 km",0.5900000000000001,31
+"control (same weights), within 2 km",1.0,96
